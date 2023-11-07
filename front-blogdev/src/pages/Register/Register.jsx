@@ -6,7 +6,7 @@ const Register = () => {
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmedPassword, setConfirmePassword] = useState('')
+  const [confirmedPassword, setConfirmedPassword] = useState('')
   const [error, setError] = useState('')
   const handlerSubmit = (e) => {
     e.prevenDefault()
