@@ -1,14 +1,14 @@
-import { async } from '@firebase/util';
+import{db} from '../firebase/config';
 import {
     getAuth,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     updateProfile,
-    singnOut,
+    signOut,
 } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 
-export const useUserAuthentication = () => {
+export const userAuthentication = () => {
     const [error, setError] = useState(null)
     const [loanding, setLoanding] = useState(null)
     const [cancelled, setCancelled] = useState(false)

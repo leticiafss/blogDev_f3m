@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { userAuthentication } from '../../hooks/userAuthentication'
 
 const Register = () => {
   //#region Controller Service
@@ -8,7 +9,10 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [confirmedPassword, setConfirmedPassword] = useState('')
   const [error, setError] = useState('')
-  const handlerSubmit = (e) => {
+
+  const {createUser, error: authError, loanding} = userAuthentication
+  
+  const handlerSubmit = async (e) => {
     e.prevenDefault()
     setError('')
     const user = {
@@ -21,7 +25,10 @@ const Register = () => {
       setError('As senhas precisam ser iguais.')
       return
     }
-    console.table(user)
+
+    const res = await createUser(user) 
+
+    console.table(res)
   }
   //#endregion
   //#region View Browser Page
