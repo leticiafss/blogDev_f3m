@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { userAuthentication } from '../../hooks/userAuthentication'
 
@@ -10,10 +10,10 @@ const Register = () => {
   const [confirmedPassword, setConfirmedPassword] = useState('')
   const [error, setError] = useState('')
 
-  const {createUser, error: authError, loanding} = userAuthentication
+  const {createUser, error: authError, loading} = userAuthentication()
   
   const handlerSubmit = async (e) => {
-    e.prevenDefault()
+    e.preventDefault()
     setError('')
     const user = {
       displayName,
@@ -28,8 +28,14 @@ const Register = () => {
 
     const res = await createUser(user) 
 
-    console.table(res)
+    console.log(res)
   }
+  
+  useEffect(() => {
+    if(authError){
+      setError(authError)
+    }
+  }, [authError])
   //#endregion
   //#region View Browser Page
   return (
@@ -38,22 +44,39 @@ const Register = () => {
       <form onSubmit={handlerSubmit}>
         <label>
           <span>Nome:</span>        
-        <input type='text' name='displayName' required value={displayName} onChange={(e) => setDisplayName(e.target.value)} 
+        <input type='text' 
+        name='displayName' 
+        required 
+        value={displayName}
+        onChange={(e) => setDisplayName(e.target.value)} 
         placeholder='Entre com seu nomade nome'></input></label>
         <label>
           <span>E-mail:</span>
-        <input type='email' name='email' required value={email} onChange={(e) => setEmail(e.target.value)}
+        <input type='email' 
+        name='email' 
+        required 
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         placeholder='Entre com seu e-mail'></input></label>
         <label>
           <span>Senha:</span>
-        <input type='password' name='password' required value={password} onChange={(e) => setPassword(e.target.value)}
+        <input type='password' 
+        name='password' 
+        required 
+        value={password} 
+        onChange={(e) => setPassword(e.target.value)}
         placeholder='Entre com sua senha'></input></label>
         <label>
           <span>Confirmação</span>
-        <input type='password' name='confirmedPassword' required value={confirmedPassword} onChange={(e) => setConfirmedPassword(e.target.value)}
+        <input type='password' 
+        name='confirmedPassword' 
+        required 
+        value={confirmedPassword} 
+        onChange={(e) => setConfirmedPassword(e.target.value)}
         placeholder='Entre com sua senha'></input>
         </label>
-        <button className='btn'>Cadastrar</button>
+        {!loading && <button className='btn'>Cadastrar</button>}
+        {loading && <button className='btn'>Aguarde...</button>}
         {error && <p className='error'>{error}</p>}
       </form>
     </div>
