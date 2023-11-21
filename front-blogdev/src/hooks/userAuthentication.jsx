@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 
 export const userAuthentication = () => {
     const [error, setError] = useState(null)
-    const [loanding, setLoanding] = useState(null)
+    const [loading, setLoading] = useState(null)
     const [cancelled, setCancelled] = useState(false)
 
     const auth = getAuth()
@@ -24,7 +24,7 @@ export const userAuthentication = () => {
     async function createUser(data) {
         checkIfIsCancelled()
 
-        setLoanding(true)
+        setLoading(true)
         setError(null)
 
     try {
@@ -37,12 +37,12 @@ export const userAuthentication = () => {
             displayName: data.displayName
         })
 
-        setloanding(false)
+        setLoading(false)
 
         return user
         }catch (error) {
         console.error(error.message)
-        console.table(typeof error.message)
+        console.table(typeof error)
 
         let systemErrorMessage
 
@@ -54,11 +54,67 @@ export const userAuthentication = () => {
                 systemErrorMessage = "Ocorreu um error, tente novamente mais tarde"
             }
 
-            setLoanding(false)
+            setLoading(false)
             setError(systemErrorMessage)
         }
     }
+    async function userLogin(data){
+        checkIfIsCancelled()
 
+        setLoading(true)
+        setError(null)
+
+    try {
+        const { user } = await signInWithEmailAndPassword(
+            auth,
+            data.email,
+            data.password
+        )
+        await updateProfile(user, {
+            displayName: data.displayName
+        })
+
+        setLoading(false)
+
+        return user
+        }catch (error) {
+        console.error(error.message)
+        console.table(typeof error)
+
+        let systemErrorMessage
+
+        if (error.message.includes("Invalid")) {
+                systemErrorMessage = "Informações de Login inválidas"
+            }else {
+                systemErrorMessage = "Ocorreu um error, tente novamente mais tarde"
+            }
+
+            setLoading(false)
+            setError(systemErrorMessage)
+        } 
+    }
+    async function userLogout() {
+        checkIfIsCancelled()
+
+        setLoading(true)
+        setError(null)
+
+        try {
+            await signOut(auth)
+            setLoading(false)
+        } catch (error) {
+            console.error(error.message)
+            console.table(typeof error)
+
+            let systemErrorMessage
+
+            systemErrorMessage = "Ocorreu um error, tente novamente mais tarde"
+
+            setLoading(false)
+            setError(systemErrorMessage)
+        }
+    }
+    
     useEffect(() => {
         return() => setCancelled(true)
     }, [])
@@ -66,8 +122,9 @@ export const userAuthentication = () => {
     return {
         auth,
         createUser,
+        userLogin,
+        userLogout,
         error,
-        loanding
+        loading
     }
 }
- 
