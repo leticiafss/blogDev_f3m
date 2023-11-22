@@ -1,11 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { userAuthentication } from '../../hooks/userAuthentication'
-
+import { useNavigate } from 'react-router-dom'
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   const {userLogin, error: authError, loading} = userAuthentication()
   const handlerSubmit = async (e) => {
@@ -15,10 +16,16 @@ export default function Login() {
       email,
       password
     }
-
-    const res = await userLogin(user) 
-
-    console.log(res)
+try {
+  const res = await userLogin(user) 
+if (res) {
+  navigate('/')
+}
+  console.log(res)
+  
+} catch (error) {
+  
+}
   }
   return (
     <div className='divlogin'>

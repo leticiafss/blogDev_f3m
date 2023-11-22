@@ -1,13 +1,20 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import styles from './Navbar.module.css'
-
-const Navbar = () => {
-  return (
+import {userAuthentication} from '../hooks/userAuthentication'
+import { useNavigate } from 'react-router-dom'
+const Navbar = ({user}) => {
+const navigate = useNavigate()
+const {userLogout} = userAuthentication()
+const handlerLogout = () => {
+userLogout()
+navigate('/login')
+}
+return (
     <>
     <nav className={styles.navbar}>
       <NavLink to='/'className={styles.brand}>
-        Blog <span>Dev</span>
+        Blog <span>Dev</span> {user && <span> - {user.displayName}</span>}
       </NavLink>
         <ul className={styles.links_list}>
           <li>
@@ -22,6 +29,7 @@ const Navbar = () => {
           <li>
             <NavLink to='/about' className={({isActive}) => (isActive ? styles.active : null)}>Sobre</NavLink>
           </li>
+          {user && <button onClick={handlerLogout}>logout</button>}
         </ul>
     </nav>
     </>
