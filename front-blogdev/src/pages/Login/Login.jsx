@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { userAuthentication } from '../../hooks/userAuthentication'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -8,6 +9,7 @@ export default function Login() {
   const [error, setError] = useState('')
 
   const {userLogin, error: authError, loading} = userAuthentication()
+  const navegate = useNavigate()
   const handlerSubmit = async (e) => {
     e.preventDefault()
     setError('')
@@ -16,9 +18,24 @@ export default function Login() {
       password
     }
 
+    if(!email || !password){
+      setError('Preencha todos os campos')
+      return
+    }
+
+    try {
+      const res = await userLogin(user)
+      if(res){
+        navegate('/')
+        console.log(res)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
     const res = await userLogin(user) 
 
-    console.log(res)
+    
   }
   return (
     <div className='divlogin'>

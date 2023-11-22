@@ -25,6 +25,8 @@ function App() {
       setUser(user);
     });
   }, [auth]);
+
+  console.log(user)
   
   if (loadingUser) {
       return <div className="container load"><img src={loading} alt="Gif_loading" width="120px" height="120px" /></div>
@@ -33,7 +35,7 @@ function App() {
     <>
       <AuthProvider value={{user}}>
         <BrowserRouter>
-          <Navbar />
+          <Navbar user={user}/>
           <div className="container">
             <Routes>
               <Route path="/" element={<Home />}></Route>

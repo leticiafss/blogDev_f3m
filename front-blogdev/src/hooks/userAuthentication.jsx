@@ -36,6 +36,7 @@ export const userAuthentication = () => {
         await updateProfile(user, {
             displayName: data.displayName
         })
+        userLogout()
 
         setLoading(false)
 
