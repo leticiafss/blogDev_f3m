@@ -12,6 +12,8 @@ import Footer from "./components/Footer";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import loading from "./assets/loading.gif";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import CreatePost from "./pages/CreatePost/CreatePost";
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -31,7 +33,7 @@ function App() {
   }
   return (
     <>
-      <AuthProvider value={{user}}>
+      <AuthProvider value={{ user }}>
         <BrowserRouter>
           <Navbar />
           <div className="container">
@@ -40,6 +42,8 @@ function App() {
               <Route path="/about" element={<About />}></Route>
               <Route path="/register" element={<Register />}></Route>
               <Route path="/login" element={<Login />}></Route>
+              <Route path="/dashboard" element={<Dashboard />}></Route>
+              <Route path="/post/create" element={<CreatePost />}></Route>
             </Routes>
           </div>
           <Footer />

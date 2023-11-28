@@ -1,8 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { userAuthentication } from '../hooks/userAuthentication'
+import { useAuthValue } from '../context/AuthContext'
 import styles from './Navbar.module.css'
 
 const Navbar = () => {
+  const { user } = useAuthValue();
+  const { logout } = userAuthentication();
   return (
     <>
     <nav className={styles.navbar}>
@@ -13,15 +17,36 @@ const Navbar = () => {
           <li>
             <NavLink to='/' className={({isActive}) => (isActive ? styles.active : null)}>Home</NavLink>
           </li>
-          <li>
+          {!user && (
+            <>
+            <li>
             <NavLink to='/login' className={({isActive}) => (isActive ? styles.active : null)}>Login</NavLink>
           </li>
           <li>
             <NavLink to='/register' className={({isActive}) => (isActive ? styles.active : null)}>Cadastro</NavLink>
           </li>
+            </>
+          )}
+          {user && (
+            <>
+            <li>
+            <NavLink to='/post/create' className={({isActive}) => (isActive ? styles.active : null)}>Novo Post</NavLink>
+            </li>
+            <li>
+              <NavLink to='/Dasboard' className={({isActive}) => (isActive ? styles.active : null)}>Dashboard</NavLink>
+            </li>
+            </>
+          )}
           <li>
             <NavLink to='/about' className={({isActive}) => (isActive ? styles.active : null)}>Sobre</NavLink>
           </li>
+          {user && (
+            <>
+            <li>
+              <button onClick={logout} className={styles.logout}>Exit</button>
+            </li>
+            </>
+          )}
         </ul>
     </nav>
     </>

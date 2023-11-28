@@ -93,28 +93,12 @@ export const userAuthentication = () => {
             setError(systemErrorMessage)
         } 
     }
-    async function userLogout() {
+
+    const logout = () => {
         checkIfIsCancelled()
-
-        setLoading(true)
-        setError(null)
-
-        try {
-            await signOut(auth)
-            setLoading(false)
-        } catch (error) {
-            console.error(error.message)
-            console.table(typeof error)
-
-            let systemErrorMessage
-
-            systemErrorMessage = "Ocorreu um error, tente novamente mais tarde"
-
-            setLoading(false)
-            setError(systemErrorMessage)
-        }
+        signOut(auth)
     }
-    
+       
     useEffect(() => {
         return() => setCancelled(true)
     }, [])
@@ -123,7 +107,7 @@ export const userAuthentication = () => {
         auth,
         createUser,
         userLogin,
-        userLogout,
+        logout,
         error,
         loading
     }
