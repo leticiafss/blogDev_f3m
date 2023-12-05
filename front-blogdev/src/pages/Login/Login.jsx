@@ -1,44 +1,40 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
-import { userAuthentication } from '../../hooks/userAuthentication'
+import React, { useEffect } from "react";
+import styles from "./Login.module.css";
+import { useState } from "react";
+import { userAuthentication } from "../../hooks/userAuthentication";
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const {createUser, error: authError, loading} = userAuthentication()
-  
+  const { createUser, error: authError, loading } = userAuthentication();
+
   const handlerSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError("");
     const user = {
-      displayName,
       email,
-      password
-    }
+      password,
+    };
 
-    if(password != confirmedPassword){
-      setError('As senhas precisam ser iguais.')
-      return
-    }
+    const res = await createUser(user);
 
-    const res = await createUser(user) 
+    console.log(res);
+  };
 
-    console.log(res)
-  }
-  
   useEffect(() => {
-    if(authError){
-      setError(authError)
+    if (authError) {
+      setError(authError);
     }
-  }, [authError])
+  }, [authError]);
   return (
-    <div>
+    <div className={styles.login}>
       <h1>Entrar no BlogDev</h1>
+      <p>Entre no ambiente do BlogDev, e comece a compartilhar suas ideias!</p>
       <form onSubmit={handlerSubmit}>
-        <span>E-mail:</span>
         <label>
+          <span>E-mail:</span>
           <input
             type="email"
             name="email"
