@@ -79,16 +79,3 @@ button[disabled]{
     align-items: center;
     text-align: center;
 }
-.divlogin{
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.labelLogin{
-    margin: 15px 0 15px 0;
-}
-.linkcadaster:hover{
-    font-weight: bold;
-}

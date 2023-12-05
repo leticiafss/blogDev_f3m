@@ -1,5 +1,5 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
 import { userAuthentication } from '../../hooks/userAuthentication'
 
 export default function Login() {
@@ -7,41 +7,62 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
 
-  const {userLogin, error: authError, loading} = userAuthentication()
+  const {createUser, error: authError, loading} = userAuthentication()
+  
   const handlerSubmit = async (e) => {
     e.preventDefault()
     setError('')
     const user = {
+      displayName,
       email,
       password
     }
 
-    const res = await userLogin(user) 
+    if(password != confirmedPassword){
+      setError('As senhas precisam ser iguais.')
+      return
+    }
+
+    const res = await createUser(user) 
 
     console.log(res)
   }
+  
+  useEffect(() => {
+    if(authError){
+      setError(authError)
+    }
+  }, [authError])
   return (
-    <div className='divlogin'>
-      <h1>Faça seu Login</h1>
+    <div>
+      <h1>Entrar no BlogDev</h1>
       <form onSubmit={handlerSubmit}>
-        <label className='labelLogin'>E-mail:
-          <input type="email"
-           name='email'
-           placeholder='Insira seu e-mail'
-           value={email} 
-           onChange={(e) => setEmail(e.target.value)}/>
+        <span>E-mail:</span>
+        <label>
+          <input
+            type="email"
+            name="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Entre com seu e-mail"
+          ></input>
         </label>
-        <label className='labelLogin'>Senha:
-          <input type="password"
-          name='password'
-          placeholder='Insira sua senha'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}/>
+        <label>
+          <span>Senha:</span>
+          <input
+            type="password"
+            name="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Entre com sua senha"
+          ></input>
         </label>
-        <button className='btn'>{!loading ? 'Entrar' : 'Aguarde...'}</button>
-        {error && <p className='error'>{error}</p>}
+        {!loading && <button className="btn">Login</button>}
+        {loading && <button className="btn">Aguarde...</button>}
+        {error && <p className="error">{error}</p>}
       </form>
-      <p>Não é cadastrado?<a className='linkcadaster' href="./register"> Cadastre-se</a></p>
     </div>
-  )
+  );
 }
