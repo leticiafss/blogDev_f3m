@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { userAuthentication } from '../hooks/userAuthentication'
 import { useAuthValue } from '../context/AuthContext'
 import styles from './Navbar.module.css'
@@ -7,6 +7,7 @@ import styles from './Navbar.module.css'
 const Navbar = () => {
   const { user } = useAuthValue();
   const { logout } = userAuthentication();
+  const navigate = useNavigate();
   return (
     <>
     <nav className={styles.navbar}>

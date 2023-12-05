@@ -2,13 +2,15 @@ import React, { useEffect } from "react";
 import styles from "./Login.module.css";
 import { useState } from "react";
 import { userAuthentication } from "../../hooks/userAuthentication";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const { createUser, error: authError, loading } = userAuthentication();
+  const { login, error: authError, loading } = userAuthentication();
+  const { navigate } = useNavigate();
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
@@ -18,9 +20,11 @@ export default function Login() {
       password,
     };
 
-    const res = await createUser(user);
+    const res = await login(user);
 
     console.log(res);
+
+    navigate("/post/create")
   };
 
   useEffect(() => {
