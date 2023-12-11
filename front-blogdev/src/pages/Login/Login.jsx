@@ -10,7 +10,7 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const { login, error: authError, loading } = userAuthentication();
-  const { navigate } = useNavigate();
+  const  navigate  = useNavigate();
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
