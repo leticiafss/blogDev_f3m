@@ -3,12 +3,23 @@ import styles from './Dashboard.module.css';
 import { userFetchDocuments } from '../../hooks/userFetchDocuments';
 import { useAuthValue } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { userDeleteDocument } from '../../hooks/userDeleteDocument';
 
 const Dashboard = () => {
   const { user } = useAuthValue();
   const navigate = useNavigate();
   const docCollection = 'posts';
   const { documents, error, loading } = userFetchDocuments(docCollection, null, user.uid);
+  const { deleteDocument } = userDeleteDocument(docCollection);
+
+  const handleDelete = async (id) => {
+    try {
+      await deleteDocument(id);
+      alert('Post excluído com sucesso!');
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className={styles.dashboard}>
@@ -24,10 +35,12 @@ const Dashboard = () => {
           <div>
             <a className="btn btn-outline" href={`/posts/${doc.id}`}>Ver</a>
             <a className="btn btn-outline" href={`/posts/edit/${doc.id}`}>Editar</a>
-            <button className="btn btn-outline btn-danger">Excluir</button>
+            <button className="btn btn-outline" onClick={() => handleDelete(doc.id)}>Excluir</button>
           </div>
         </div>
       ))}
+      
+      {documents && documents.length === 0 && <h2>Sem posts</h2>}
     </div>
   );
 };
