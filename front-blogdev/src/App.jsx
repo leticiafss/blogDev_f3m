@@ -14,6 +14,7 @@ import Login from "./pages/Login/Login";
 import loading from "./assets/loading.gif";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import CreatePost from "./pages/CreatePost/CreatePost";
+import Post from "./pages/Post/Post";
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -44,6 +45,7 @@ function App() {
               <Route path="/login" element={<Login />}></Route>
               <Route path="/dashboard" element={<Dashboard />}></Route>
               <Route path="/post/create" element={<CreatePost />}></Route>
+              <Route path="/posts/:id" element={<Post />}></Route>
             </Routes>
           </div>
           <Footer />

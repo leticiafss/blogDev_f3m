@@ -1,13 +1,6 @@
 import { useState, useEffect } from "react";
-import { db } from "../firebase";
-import {
-  collection,
-  query,
-  orderBy,
-  onSnapshot,
-  where,
-  QuerySnapshot,
-} from "firebase/firestore";
+import { db } from "../firebase/config";
+import {collection, query, orderBy,  onSnapshot, where, QuerySnapshot,} from "firebase/firestore";
 
 export const userFetchDocuments = (
   docCollection,
@@ -18,7 +11,7 @@ export const userFetchDocuments = (
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
 
-  const [calcelled, setCancelled] = useState(false);
+  const [cancelled, setCancelled] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -51,8 +44,8 @@ export const userFetchDocuments = (
 
         await onSnapshot(q, (querySnapshot) => {
           setDocuments(
-            querySnapshot.doc.map((doc) => ({
-              id: doc.data.id,
+            querySnapshot.docs.map((doc) => ({
+              id: doc.id,
               ...doc.data(),
             }))
           );

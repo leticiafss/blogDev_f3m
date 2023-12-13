@@ -1,0 +1,27 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+}
+
+.card_list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.search {
+    max-width: 100%;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2em
+}
+
+.search input {
+    margin-right: 10px;
+    width: 100%;
+    height: 3em
+}

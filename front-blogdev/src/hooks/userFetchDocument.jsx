@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { db } from "../firebase";
+import { db } from "../firebase/config";
 import { doc, getDoc } from "firebase/firestore";
 
 export const userFetchDocument = (docCollection, id) => {
@@ -15,7 +15,11 @@ export const userFetchDocument = (docCollection, id) => {
         const docRef = await doc(db, docCollection, id);
         const docSnap = await getDoc(docRef);
 
-        setDocument(docSnap.data());
+        setDocument({
+          ...docSnap.data(),
+          id: docSnap.id
+        });
+        
       } catch (error) {
         console.log(error);
         setError(error.message);

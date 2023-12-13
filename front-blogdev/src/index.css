@@ -79,3 +79,11 @@ button[disabled]{
     align-items: center;
     text-align: center;
 }
+
+.post-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
