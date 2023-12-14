@@ -55,7 +55,7 @@ button[disabled]{
     padding: 5px;
     border-radius: 10px;
 }
-.btn.btn-dark{
+.btn-dark{
     background-color: #18891b;
     border-radius: 0;
 }
@@ -78,4 +78,11 @@ button[disabled]{
     border-radius: 5px;
     align-items: center;
     text-align: center;
+}
+.post-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }

@@ -55,18 +55,10 @@ const CreatePost = () => {
         uid: user.uid,
         createBy: user.displayName,
       });
+      navigate("/");  
     }catch(error) {
       console.log(error)
     }
-
-    // insertDocument({
-    //   title,
-    //   image,
-    //   body,
-    //   tags: tagsArray,
-    //   uid: user.uid,
-    //   createBy: user.displayName,
-    // });
   };
 
   return (
